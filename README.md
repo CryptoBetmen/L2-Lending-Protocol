@@ -1,23 +1,46 @@
-# Aave V3.5 Origin (CryptoBetmen Fork)
+# Aave V3.5 Origin (L2 Lending Protocol Fork)
 
 ![Aave v3.1 Origin_banner](./resources/v3-1-banner.jpeg)
 
-Aave v3.5 complete codebase, Foundry-based. This is a stable fork maintained by CryptoBetmen for L2 Lending Protocol development.
+Aave v3.5 complete codebase, Foundry-based. This is a fork prepared for deployment on Arbitrum L2 network with a minimalistic lending protocol configuration.
 
 [![codecov](https://codecov.io/gh/aave-dao/aave-v3-origin/graph/badge.svg?token=6HX4NXCNIQ)](https://codecov.io/gh/aave-dao/aave-v3-origin)
 <br>
 
-## Current Version
+## Fork Information
 
 **Version:** v3.5.0 (Latest Stable)  
 **Commit:** `6138e1fd` - "Version Packages (#136)"  
 **Branch:** `stable-v3.5.0`  
 **Forked from:** [aave-dao/aave-v3-origin](https://github.com/aave-dao/aave-v3-origin)  
-**License:** BUSL1.1  
+**Original Repository:** https://github.com/aave-dao/aave-v3-origin  
+**License:** BUSL-1.1 (Business Source License 1.1)  
 **Solidity:** 0.8.27  
 **Foundry:** Required
 
-*This fork is maintained by CryptoBetmen for L2 Lending Protocol development.*
+## Purpose
+
+This fork is prepared for deployment on **Arbitrum L2 network** with the following modifications:
+
+- Minimalistic protocol configuration (only essential and well-tested mechanics)
+- Custom economic model with project token, staking, and profit distribution
+- Automated deployment scripts for Arbitrum
+- Integration with Chainlink Price Feeds for oracles
+
+## License
+
+Copyright © 2025, Aave DAO, represented by its governance smart contracts.
+
+This repository is a fork of [aave-dao/aave-v3-origin](https://github.com/aave-dao/aave-v3-origin) (version 3.5.0, commit 4cfd0dd9).
+
+The [BUSL-1.1](./LICENSE) license of this repository allows for any usage of the software, if respecting the Additional Use Grant limitations, forbidding any use case damaging anyhow the Aave DAO's interests.
+Interfaces and other components required for integrations are explicitly MIT licensed.
+
+**Dependencies:**
+
+- `forge-std`: MIT License
+- `solidity-utils`: MIT License
+- `openzeppelin-contracts`: MIT License
 
 ## Contributing
 
