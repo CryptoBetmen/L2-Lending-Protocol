@@ -1,11 +1,23 @@
-# Aave V3.3 Origin
+# Aave V3.5 Origin (CryptoBetmen Fork)
 
 ![Aave v3.1 Origin_banner](./resources/v3-1-banner.jpeg)
 
-Aave v3.3 complete codebase, Foundry-based.
+Aave v3.5 complete codebase, Foundry-based. This is a stable fork maintained by CryptoBetmen for L2 Lending Protocol development.
 
 [![codecov](https://codecov.io/gh/aave-dao/aave-v3-origin/graph/badge.svg?token=6HX4NXCNIQ)](https://codecov.io/gh/aave-dao/aave-v3-origin)
 <br>
+
+## Current Version
+
+**Version:** v3.5.0 (Latest Stable)  
+**Commit:** `6138e1fd` - "Version Packages (#136)"  
+**Branch:** `stable-v3.5.0`  
+**Forked from:** [aave-dao/aave-v3-origin](https://github.com/aave-dao/aave-v3-origin)  
+**License:** BUSL1.1  
+**Solidity:** 0.8.27  
+**Foundry:** Required
+
+*This fork is maintained by CryptoBetmen for L2 Lending Protocol development.*
 
 ## Contributing
 
