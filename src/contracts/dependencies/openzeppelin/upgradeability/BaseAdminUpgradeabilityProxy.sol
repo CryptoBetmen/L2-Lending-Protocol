@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: MIT
+//aderyn-ignore-next-line
 pragma solidity ^0.8.10;
 
 import './UpgradeabilityProxy.sol';
@@ -11,6 +12,7 @@ import './UpgradeabilityProxy.sol';
  * `ifAdmin` modifier. See ethereum/solidity#3864 for a Solidity
  * feature proposal that would enable this to be done automatically.
  */
+//aderyn-ignore-next-line
 contract BaseAdminUpgradeabilityProxy is BaseUpgradeabilityProxy {
   /**
    * @dev Emitted when the administration has been transferred.

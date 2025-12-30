@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: MIT
+//aderyn-ignore-next-line
 pragma solidity ^0.8.10;
 
 import './Proxy.sol';
@@ -10,6 +11,7 @@ import '../contracts/Address.sol';
  * implementation address to which it will delegate.
  * Such a change is called an implementation upgrade.
  */
+//aderyn-ignore-next-line
 contract BaseUpgradeabilityProxy is Proxy {
   /**
    * @dev Emitted when the implementation is upgraded.

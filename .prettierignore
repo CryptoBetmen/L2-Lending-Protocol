@@ -3,6 +3,8 @@ lib
 cache
 node_modules
 report
+reports
+diffs
 _corpus
 crytic-export
 snapshots
