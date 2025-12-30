@@ -15,13 +15,16 @@ import './Address.sol';
  * To use this library you can add a `using SafeERC20 for IERC20;` statement to your contract,
  * which allows you to call the safe operations as `token.safeTransfer(...)`, etc.
  */
+//aderyn-ignore-next-line
 library SafeERC20 {
   using Address for address;
 
+  //aderyn-ignore-next-line
   function safeTransfer(IERC20 token, address to, uint256 value) internal {
     _callOptionalReturn(token, abi.encodeWithSelector(token.transfer.selector, to, value));
   }
 
+  //aderyn-ignore-next-line
   function safeTransferFrom(IERC20 token, address from, address to, uint256 value) internal {
     _callOptionalReturn(
       token,
@@ -36,6 +39,7 @@ library SafeERC20 {
    * Whenever possible, use {safeIncreaseAllowance} and
    * {safeDecreaseAllowance} instead.
    */
+  //aderyn-ignore-next-line
   function safeApprove(IERC20 token, address spender, uint256 value) internal {
     // safeApprove should only be called when setting an initial allowance,
     // or when resetting it to zero. To increase and decrease it, use
@@ -47,6 +51,7 @@ library SafeERC20 {
     _callOptionalReturn(token, abi.encodeWithSelector(token.approve.selector, spender, value));
   }
 
+  //aderyn-ignore-next-line
   function safeIncreaseAllowance(IERC20 token, address spender, uint256 value) internal {
     uint256 newAllowance = token.allowance(address(this), spender) + value;
     _callOptionalReturn(
@@ -55,6 +60,7 @@ library SafeERC20 {
     );
   }
 
+  //aderyn-ignore-next-line
   function safeDecreaseAllowance(IERC20 token, address spender, uint256 value) internal {
     unchecked {
       uint256 oldAllowance = token.allowance(address(this), spender);
@@ -73,6 +79,7 @@ library SafeERC20 {
    * @param token The token targeted by the call.
    * @param data The call data (encoded using abi.encode or one of its variants).
    */
+  //aderyn-ignore-next-line
   function _callOptionalReturn(IERC20 token, bytes memory data) private {
     // We need to perform a low level call here, to bypass Solidity's return data size checking mechanism, since
     // we're implementing it ourselves. We use {Address.functionCall} to perform this call, which verifies that

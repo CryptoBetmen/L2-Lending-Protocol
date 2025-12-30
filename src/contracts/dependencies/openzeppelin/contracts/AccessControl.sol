@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-
+//aderyn-ignore-next-line
 pragma solidity ^0.8.10;
 
 import './IAccessControl.sol';
@@ -91,6 +91,7 @@ abstract contract AccessControl is Context, IAccessControl, ERC165 {
    *
    *  /^AccessControl: account (0x[0-9a-f]{40}) is missing role (0x[0-9a-f]{64})$/
    */
+  //aderyn-ignore-next-line
   function _checkRole(bytes32 role, address account) internal view {
     if (!hasRole(role, account)) {
       revert(
@@ -126,6 +127,7 @@ abstract contract AccessControl is Context, IAccessControl, ERC165 {
    *
    * - the caller must have ``role``'s admin role.
    */
+  //aderyn-ignore-next-line
   function grantRole(
     bytes32 role,
     address account
@@ -142,6 +144,7 @@ abstract contract AccessControl is Context, IAccessControl, ERC165 {
    *
    * - the caller must have ``role``'s admin role.
    */
+  //aderyn-ignore-next-line
   function revokeRole(
     bytes32 role,
     address account
@@ -163,6 +166,7 @@ abstract contract AccessControl is Context, IAccessControl, ERC165 {
    *
    * - the caller must be `account`.
    */
+  //aderyn-ignore-next-line
   function renounceRole(bytes32 role, address account) public virtual override {
     require(account == _msgSender(), 'AccessControl: can only renounce roles for self');
 

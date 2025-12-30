@@ -31,7 +31,7 @@ This fork is prepared for deployment on **Arbitrum L2 network** with the followi
 
 Copyright © 2025, Aave DAO, represented by its governance smart contracts.
 
-This repository is a fork of [aave-dao/aave-v3-origin](https://github.com/aave-dao/aave-v3-origin) (version 3.5.0, commit 4cfd0dd9).
+This repository is a fork of [aave-dao/aave-v3-origin](https://github.com/aave-dao/aave-v3-origin) (version 3.5.0, commit 6138e1fd).
 
 The [BUSL-1.1](./LICENSE) license of this repository allows for any usage of the software, if respecting the Additional Use Grant limitations, forbidding any use case damaging anyhow the Aave DAO's interests.
 Interfaces and other components required for integrations are explicitly MIT licensed.

@@ -13,7 +13,7 @@ Licensor:             Aave DAO, represented by its governance smart contracts
 Licensed Work:        Aave v3.5 (Fork for L2 Lending Protocol on Arbitrum)
                       The Licensed Work is (c) 2025 Aave DAO, represented by its governance smart contracts
                       
-                      This is a fork of aave-dao/aave-v3-origin (version 3.5.0, commit 4cfd0dd9)
+                      This is a fork of aave-dao/aave-v3-origin (version 3.5.0, commit 6138e1fd)
                       Forked for deployment on Arbitrum L2 network with custom economic model.
                       Original repository: https://github.com/aave-dao/aave-v3-origin
 

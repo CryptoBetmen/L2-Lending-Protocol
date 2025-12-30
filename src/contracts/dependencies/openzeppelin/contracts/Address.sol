@@ -6,6 +6,7 @@ pragma solidity ^0.8.0;
 /**
  * @dev Collection of functions related to the address type
  */
+//aderyn-ignore-next-line
 library Address {
   /**
    * @dev Returns true if `account` is a contract.
@@ -24,6 +25,7 @@ library Address {
    *  - an address where a contract lived, but was destroyed
    * ====
    */
+  //aderyn-ignore-next-line
   function isContract(address account) internal view returns (bool) {
     // This method relies on extcodesize, which returns 0 for contracts in
     // construction, since the code is only stored at the end of the
@@ -52,6 +54,7 @@ library Address {
    * {ReentrancyGuard} or the
    * https://solidity.readthedocs.io/en/v0.5.11/security-considerations.html#use-the-checks-effects-interactions-pattern[checks-effects-interactions pattern].
    */
+  //aderyn-ignore-next-line
   function sendValue(address payable recipient, uint256 amount) internal {
     require(address(this).balance >= amount, 'Address: insufficient balance');
 
@@ -77,6 +80,7 @@ library Address {
    *
    * _Available since v3.1._
    */
+  //aderyn-ignore-next-line
   function functionCall(address target, bytes memory data) internal returns (bytes memory) {
     return functionCall(target, data, 'Address: low-level call failed');
   }
@@ -87,6 +91,7 @@ library Address {
    *
    * _Available since v3.1._
    */
+  //aderyn-ignore-next-line
   function functionCall(
     address target,
     bytes memory data,
@@ -106,6 +111,7 @@ library Address {
    *
    * _Available since v3.1._
    */
+  //aderyn-ignore-next-line
   function functionCallWithValue(
     address target,
     bytes memory data,
@@ -152,6 +158,7 @@ library Address {
    *
    * _Available since v3.3._
    */
+  //aderyn-ignore-next-line
   function functionStaticCall(
     address target,
     bytes memory data,
@@ -179,6 +186,7 @@ library Address {
    *
    * _Available since v3.4._
    */
+  //aderyn-ignore-next-line
   function functionDelegateCall(
     address target,
     bytes memory data,
