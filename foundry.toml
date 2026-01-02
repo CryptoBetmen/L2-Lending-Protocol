@@ -10,15 +10,8 @@ bytecode_hash = 'none'
 ignored_warnings_from = ["src/periphery/contracts/treasury/RevenueSplitter.sol"]
 out = 'out'
 libs = ['lib']
-remappings = [
-  'solidity-utils/=lib/solidity-utils/src/',
-  'forge-std/=lib/forge-std/src/',
-  'ds-test/=lib/forge-std/lib/ds-test/src/',
-  'openzeppelin-contracts-upgradeable/=lib/solidity-utils/lib/openzeppelin-contracts-upgradeable/',
-  'openzeppelin-contracts/=lib/solidity-utils/lib/openzeppelin-contracts-upgradeable/lib/openzeppelin-contracts/',
-  '@openzeppelin/contracts/=lib/solidity-utils/lib/openzeppelin-contracts-upgradeable/lib/openzeppelin-contracts/contracts/',
-  '@openzeppelin/contracts-upgradeable/=lib/solidity-utils/lib/openzeppelin-contracts-upgradeable/contracts/',
-]
+remappings = []
+via_ir = true
 fs_permissions = [
   { access = "write", path = "./reports" },
   { access = "read", path = "./out" },
