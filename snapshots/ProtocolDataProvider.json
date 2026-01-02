@@ -1,16 +1,16 @@
 {
-  "getATokenTotalSupply": "30085",
-  "getFlashLoanEnabled": "11346",
-  "getInterestRateStrategyAddress": "8811",
+  "getATokenTotalSupply": "30267",
+  "getFlashLoanEnabled": "11489",
+  "getInterestRateStrategyAddress": "8948",
   "getIsVirtualAccActive": "463",
-  "getLiquidationProtocolFee": "11373",
-  "getPaused": "11462",
-  "getReserveCaps": "11383",
-  "getReserveConfigurationData": "11819",
-  "getReserveTokensAddresses": "14934",
-  "getSiloedBorrowing": "11399",
-  "getTotalDebt": "30085",
+  "getLiquidationProtocolFee": "11511",
+  "getPaused": "11618",
+  "getReserveCaps": "11511",
+  "getReserveConfigurationData": "11969",
+  "getReserveTokensAddresses": "15134",
+  "getSiloedBorrowing": "11543",
+  "getTotalDebt": "30267",
   "getUnbackedMintCap": "413",
-  "getUserReserveData": "66386",
-  "getVirtualUnderlyingBalance": "11144"
+  "getUserReserveData": "71315",
+  "getVirtualUnderlyingBalance": "11181"
 }

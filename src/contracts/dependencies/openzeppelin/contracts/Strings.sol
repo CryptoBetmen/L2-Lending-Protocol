@@ -5,6 +5,7 @@ pragma solidity ^0.8.10;
 /**
  * @dev String operations.
  */
+//aderyn-ignore-next-line
 library Strings {
   bytes16 private constant _HEX_SYMBOLS = '0123456789abcdef';
 
@@ -52,6 +53,7 @@ library Strings {
   /**
    * @dev Converts a `uint256` to its ASCII `string` hexadecimal representation with fixed length.
    */
+  //aderyn-ignore-next-line
   function toHexString(uint256 value, uint256 length) internal pure returns (string memory) {
     bytes memory buffer = new bytes(2 * length + 2);
     buffer[0] = '0';
