@@ -23,7 +23,15 @@ contract AaveV3PeripheryBatch is
     address poolAddressesProvider,
     address setupBatch
   ) {
-    _report.aaveOracle = _deployAaveOracle(config.oracleDecimals, poolAddressesProvider);
+    // Use ETH/USD price feed as fallback oracle (standard Aave approach)
+    // networkBaseTokenPriceInUsdProxyAggregator is the ETH/USD Chainlink feed
+    // For Arbitrum Sepolia: 0x2d3bBa5e0A9Fd8EAa45Dcf71A2389b7C12005b1f
+    // This value comes from K613ArbitrumMarketInput.ARBITRUM_SEPOLIA_ETH_USD_PRICE_FEED
+    _report.aaveOracle = _deployAaveOracle(
+      config.oracleDecimals,
+      poolAddressesProvider,
+      config.networkBaseTokenPriceInUsdProxyAggregator
+    );
 
     if (config.treasury == address(0)) {
       TreasuryReport memory treasuryReport = _deployAaveV3Treasury(poolAdmin, config.salt);

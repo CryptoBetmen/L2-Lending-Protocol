@@ -11,6 +11,7 @@ ignored_warnings_from = ["src/periphery/contracts/treasury/RevenueSplitter.sol"]
 out = 'out'
 libs = ['lib']
 remappings = []
+via_ir = true
 fs_permissions = [
   { access = "write", path = "./reports" },
   { access = "read", path = "./out" },
