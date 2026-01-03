@@ -171,10 +171,10 @@ jobs:
           FOUNDRY_PROFILE: default
           FOUNDRY_DISABLE_NIGHTLY_WARNING: 1
 
-      - name: Test step 9 - Remaining tests
+      - name: Test step 9 - Invariant  tests
         run: |
-          echo "Step 9: Running remaining tests..."
-          forge test --via-ir --skip tests/deployments/ --skip tests/protocol/ --skip tests/rewards/ --skip tests/misc/ --skip tests/extensions/ --skip tests/treasury/
+          echo "Step 9: Running invariant tests..."
+          forge test tests/invariants/ --via-ir
         timeout-minutes: 20
         env:
           FOUNDRY_PROFILE: default
