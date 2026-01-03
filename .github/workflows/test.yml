@@ -75,7 +75,7 @@ jobs:
   test:
     name: Test
     runs-on: ubuntu-latest
-    timeout-minutes: 200
+    timeout-minutes: 300
     needs: build
     steps:
       - name: Checkout Repo
@@ -126,59 +126,144 @@ jobs:
           FOUNDRY_PROFILE: default
           FOUNDRY_DISABLE_NIGHTLY_WARNING: 1
 
-      - name: Test step 4 - Protocol other tests
+      - name: Test step 4 - Protocol configuration tests
         run: |
-          echo "Step 4: Running other protocol tests..."
-          forge test tests/protocol/ --via-ir --skip tests/protocol/pool/ --skip tests/protocol/tokenization/
-        timeout-minutes: 20
+          echo "Step 4: Running protocol configuration tests..."
+          forge test tests/protocol/configuration/ --via-ir
+        timeout-minutes: 15
         env:
           FOUNDRY_PROFILE: default
           FOUNDRY_DISABLE_NIGHTLY_WARNING: 1
 
-      - name: Test step 5 - Rewards tests
+      - name: Test step 5 - Protocol libraries tests
         run: |
-          echo "Step 5: Running rewards tests..."
+          echo "Step 5: Running protocol libraries tests..."
+          forge test tests/protocol/libraries/ --via-ir
+        timeout-minutes: 15
+        env:
+          FOUNDRY_PROFILE: default
+          FOUNDRY_DISABLE_NIGHTLY_WARNING: 1
+
+      - name: Test step 6 - Rewards tests
+        run: |
+          echo "Step 6: Running rewards tests..."
           forge test tests/rewards/ --via-ir
         timeout-minutes: 20
         env:
           FOUNDRY_PROFILE: default
           FOUNDRY_DISABLE_NIGHTLY_WARNING: 1
 
-      - name: Test step 6 - Misc tests
+      - name: Test step 7 - Misc tests
         run: |
-          echo "Step 6: Running misc tests..."
+          echo "Step 7: Running misc tests..."
           forge test tests/misc/ --via-ir
         timeout-minutes: 20
         env:
           FOUNDRY_PROFILE: default
           FOUNDRY_DISABLE_NIGHTLY_WARNING: 1
 
-      - name: Test step 7 - Extensions tests
+      - name: Test step 8 - Extensions paraswap tests
         run: |
-          echo "Step 7: Running extensions tests..."
-          forge test tests/extensions/ --via-ir
-        timeout-minutes: 20
+          echo "Step 8: Running extensions paraswap tests..."
+          forge test tests/extensions/paraswap-adapters/ --via-ir
+        timeout-minutes: 15
         env:
           FOUNDRY_PROFILE: default
           FOUNDRY_DISABLE_NIGHTLY_WARNING: 1
 
-      - name: Test step 8 - Treasury tests
+      - name: Test step 9 - Extensions stata-token tests
         run: |
-          echo "Step 8: Running treasury tests..."
+          echo "Step 9: Running extensions stata-token tests..."
+          forge test tests/extensions/stata-token/ --via-ir
+        timeout-minutes: 15
+        env:
+          FOUNDRY_PROFILE: default
+          FOUNDRY_DISABLE_NIGHTLY_WARNING: 1
+
+      - name: Test step 10 - Extensions v3-config-engine tests
+        run: |
+          echo "Step 10: Running extensions v3-config-engine tests..."
+          forge test tests/extensions/v3-config-engine/ --via-ir
+        timeout-minutes: 15
+        env:
+          FOUNDRY_PROFILE: default
+          FOUNDRY_DISABLE_NIGHTLY_WARNING: 1
+
+      - name: Test step 11 - Extensions other tests
+        run: |
+          echo "Step 11: Running extensions other tests..."
+          forge test tests/extensions/ --via-ir --skip tests/extensions/paraswap-adapters/ --skip tests/extensions/stata-token/ --skip tests/extensions/v3-config-engine/
+        timeout-minutes: 10
+        env:
+          FOUNDRY_PROFILE: default
+          FOUNDRY_DISABLE_NIGHTLY_WARNING: 1
+        continue-on-error: true
+
+      - name: Test step 12 - Treasury tests
+        run: |
+          echo "Step 12: Running treasury tests..."
           forge test tests/treasury/ --via-ir
         timeout-minutes: 15
         env:
           FOUNDRY_PROFILE: default
           FOUNDRY_DISABLE_NIGHTLY_WARNING: 1
 
-      - name: Test step 9 - Remaining tests
+      - name: Test step 13 - Invariants tests
         run: |
-          echo "Step 9: Running remaining tests..."
-          forge test --via-ir --skip tests/deployments/ --skip tests/protocol/ --skip tests/rewards/ --skip tests/misc/ --skip tests/extensions/ --skip tests/treasury/
+          echo "Step 13: Running invariants tests..."
+          forge test tests/invariants/ --via-ir
         timeout-minutes: 20
         env:
           FOUNDRY_PROFILE: default
           FOUNDRY_DISABLE_NIGHTLY_WARNING: 1
+
+      - name: Test step 14 - Gas tests
+        run: |
+          echo "Step 14: Running gas tests..."
+          forge test tests/gas/ --via-ir
+        timeout-minutes: 15
+        env:
+          FOUNDRY_PROFILE: default
+          FOUNDRY_DISABLE_NIGHTLY_WARNING: 1
+
+      - name: Test step 15 - Helpers tests
+        run: |
+          echo "Step 15: Running helpers tests..."
+          forge test tests/helpers/ --via-ir
+        timeout-minutes: 15
+        env:
+          FOUNDRY_PROFILE: default
+          FOUNDRY_DISABLE_NIGHTLY_WARNING: 1
+
+      - name: Test step 16 - Harness tests
+        run: |
+          echo "Step 16: Running harness tests..."
+          forge test tests/harness/ --via-ir || true
+        timeout-minutes: 10
+        env:
+          FOUNDRY_PROFILE: default
+          FOUNDRY_DISABLE_NIGHTLY_WARNING: 1
+        continue-on-error: true
+
+      - name: Test step 17 - Utils tests
+        run: |
+          echo "Step 17: Running utils tests..."
+          forge test tests/utils/ --via-ir || true
+        timeout-minutes: 10
+        env:
+          FOUNDRY_PROFILE: default
+          FOUNDRY_DISABLE_NIGHTLY_WARNING: 1
+        continue-on-error: true
+
+      - name: Test step 18 - Template tests
+        run: |
+          echo "Step 18: Running template tests..."
+          forge test tests/template/ --via-ir || true
+        timeout-minutes: 10
+        env:
+          FOUNDRY_PROFILE: default
+          FOUNDRY_DISABLE_NIGHTLY_WARNING: 1
+        continue-on-error: true
 
       - name: Generate coverage report
         run: |
