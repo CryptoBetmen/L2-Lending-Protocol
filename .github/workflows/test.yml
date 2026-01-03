@@ -75,7 +75,7 @@ jobs:
   test:
     name: Test
     runs-on: ubuntu-latest
-    timeout-minutes: 240
+    timeout-minutes: 200
     needs: build
     steps:
       - name: Checkout Repo
