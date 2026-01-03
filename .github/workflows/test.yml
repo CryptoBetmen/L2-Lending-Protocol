@@ -72,16 +72,6 @@ jobs:
           FOUNDRY_PROFILE: default
           FOUNDRY_DISABLE_NIGHTLY_WARNING: 1
 
-      - name: Build step 4 - Final verification build
-        run: |
-          echo "Step 4: Running final verification build..."
-          forge build --via-ir
-        timeout-minutes: 60
-        env:
-          FOUNDRY_PROFILE: default
-          FOUNDRY_DISABLE_NIGHTLY_WARNING: 1
-        continue-on-error: true
-
   test:
     name: Test
     runs-on: ubuntu-latest
