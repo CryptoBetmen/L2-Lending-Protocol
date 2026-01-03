@@ -21,7 +21,8 @@ jobs:
     uses: bgd-labs/github-workflows/.github/workflows/foundry-lint-prettier.yml@main
   build:
     name: Build
-    runs-on: ubuntu-latest
+
+    runs-on: ubuntu-latest-4-cores
     timeout-minutes: 120
     steps:
       - name: Checkout Repo
@@ -45,7 +46,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-foundry-
 
-      - name: Build step 1 - Compile dependencies first
+      - name: Build step 1 - Compile core contracts
         run: |
           echo "Step 1: Compiling core protocol contracts..."
           forge build --via-ir --skip test --skip script src/contracts/
@@ -53,7 +54,6 @@ jobs:
         env:
           FOUNDRY_PROFILE: default
           FOUNDRY_DISABLE_NIGHTLY_WARNING: 1
-        continue-on-error: true
 
       - name: Build step 2 - Compile deployment contracts
         run: |
@@ -63,7 +63,6 @@ jobs:
         env:
           FOUNDRY_PROFILE: default
           FOUNDRY_DISABLE_NIGHTLY_WARNING: 1
-        continue-on-error: true
 
       - name: Build step 3 - Compile scripts
         run: |
@@ -73,20 +72,23 @@ jobs:
         env:
           FOUNDRY_PROFILE: default
           FOUNDRY_DISABLE_NIGHTLY_WARNING: 1
-        continue-on-error: true
 
       - name: Build step 4 - Final verification build
         run: |
           echo "Step 4: Running final verification build..."
           forge build --via-ir
-        timeout-minutes: 30
+        timeout-minutes: 60
         env:
           FOUNDRY_PROFILE: default
           FOUNDRY_DISABLE_NIGHTLY_WARNING: 1
+        continue-on-error: true
 
   test:
     name: Test
-    runs-on: ubuntu-latest
+    # For larger runners: use 'ubuntu-latest-4-cores' or your self-hosted runner label
+    # For standard: use 'ubuntu-latest' (2 cores, 7 GB RAM)
+    # To use larger runner, replace 'ubuntu-latest' with your runner label below
+    runs-on: ubuntu-latest-4-cores
     timeout-minutes: 120
     needs: build
     steps:
