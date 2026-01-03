@@ -22,36 +22,69 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v4
+        with:
+          submodules: recursive
 
       - name: Install Foundry
         uses: foundry-rs/foundry-toolchain@v1
         with:
           version: nightly
 
+      - name: Cache Foundry
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.foundry/cache
+            cache
+          key: ${{ runner.os }}-foundry-${{ hashFiles('**/foundry.toml', '**/foundry.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-foundry-
+
       - name: Build contracts
         run: forge build --via-ir
+        timeout-minutes: 45
+        env:
+          FOUNDRY_PROFILE: default
 
   test:
     name: Test
     runs-on: ubuntu-latest
+    timeout-minutes: 90
     needs: build
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v4
+        with:
+          submodules: recursive
 
       - name: Install Foundry
         uses: foundry-rs/foundry-toolchain@v1
         with:
           version: nightly
 
+      - name: Cache Foundry
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.foundry/cache
+            cache
+          key: ${{ runner.os }}-foundry-${{ hashFiles('**/foundry.toml', '**/foundry.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-foundry-
+
       - name: Run tests
         run: forge test --via-ir
+        timeout-minutes: 60
+        env:
+          FOUNDRY_PROFILE: default
 
       - name: Run deployment tests
         run: forge test --match-path tests/deployments/**/*.sol --via-ir
+        timeout-minutes: 30
 
       - name: Generate coverage report
         run: |
@@ -60,6 +93,7 @@ jobs:
           if [ -f lcov.info ]; then
             mv lcov.info lcov/
           fi
+        timeout-minutes: 30
 
       - name: Upload coverage artifact
         uses: actions/upload-artifact@v4
