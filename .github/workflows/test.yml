@@ -75,7 +75,7 @@ jobs:
   test:
     name: Test
     runs-on: ubuntu-latest
-    timeout-minutes: 120
+    timeout-minutes: 180
     needs: build
     steps:
       - name: Checkout Repo
@@ -99,16 +99,50 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-foundry-
 
-      - name: Run tests
-        run: forge test --via-ir
-        timeout-minutes: 90
+      - name: Test step 1 - Deployment tests
+        run: |
+          echo "Step 1: Running deployment tests..."
+          forge test --match-path tests/deployments/**/*.sol --via-ir
+        timeout-minutes: 30
         env:
           FOUNDRY_PROFILE: default
           FOUNDRY_DISABLE_NIGHTLY_WARNING: 1
 
-      - name: Run deployment tests
-        run: forge test --match-path tests/deployments/**/*.sol --via-ir
+      - name: Test step 2 - Protocol pool tests
+        run: |
+          echo "Step 2: Running protocol pool tests..."
+          forge test --match-path tests/protocol/pool/**/*.sol --via-ir
+        timeout-minutes: 40
+        env:
+          FOUNDRY_PROFILE: default
+          FOUNDRY_DISABLE_NIGHTLY_WARNING: 1
+
+      - name: Test step 3 - Protocol tokenization tests
+        run: |
+          echo "Step 3: Running protocol tokenization tests..."
+          forge test --match-path tests/protocol/tokenization/**/*.sol --via-ir
         timeout-minutes: 30
+        env:
+          FOUNDRY_PROFILE: default
+          FOUNDRY_DISABLE_NIGHTLY_WARNING: 1
+
+      - name: Test step 4 - Protocol other tests
+        run: |
+          echo "Step 4: Running other protocol tests..."
+          forge test --match-path tests/protocol/**/*.sol --via-ir --skip tests/protocol/pool --skip tests/protocol/tokenization
+        timeout-minutes: 20
+        env:
+          FOUNDRY_PROFILE: default
+          FOUNDRY_DISABLE_NIGHTLY_WARNING: 1
+
+      - name: Test step 5 - Other tests (rewards, misc, etc)
+        run: |
+          echo "Step 5: Running other tests..."
+          forge test --via-ir --skip tests/deployments --skip tests/protocol
+        timeout-minutes: 30
+        env:
+          FOUNDRY_PROFILE: default
+          FOUNDRY_DISABLE_NIGHTLY_WARNING: 1
 
       - name: Generate coverage report
         run: |
