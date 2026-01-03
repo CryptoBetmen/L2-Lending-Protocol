@@ -19,8 +19,54 @@ permissions:
 jobs:
   lint:
     uses: bgd-labs/github-workflows/.github/workflows/foundry-lint-prettier.yml@main
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+
+      - name: Install Foundry
+        uses: foundry-rs/foundry-toolchain@v1
+        with:
+          version: nightly
+
+      - name: Build contracts
+        run: forge build --via-ir
+
   test:
-    uses: bgd-labs/github-workflows/.github/workflows/foundry-test.yml@main
+    name: Test
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+
+      - name: Install Foundry
+        uses: foundry-rs/foundry-toolchain@v1
+        with:
+          version: nightly
+
+      - name: Run tests
+        run: forge test --via-ir
+
+      - name: Run deployment tests
+        run: forge test --match-path tests/deployments/**/*.sol --via-ir
+
+      - name: Generate coverage report
+        run: |
+          mkdir -p lcov
+          forge coverage --report lcov --via-ir || true
+          if [ -f lcov.info ]; then
+            mv lcov.info lcov/
+          fi
+
+      - name: Upload coverage artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: lcov-report
+          path: lcov/
+          if-no-files-found: ignore
   codecov:
     needs: test
     runs-on: ubuntu-latest
