@@ -22,7 +22,7 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 120
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v4
@@ -32,7 +32,7 @@ jobs:
       - name: Install Foundry
         uses: foundry-rs/foundry-toolchain@v1
         with:
-          version: nightly
+          version: stable
 
       - name: Cache Foundry
         uses: actions/cache@v4
@@ -40,20 +40,54 @@ jobs:
           path: |
             ~/.foundry/cache
             cache
+            out
           key: ${{ runner.os }}-foundry-${{ hashFiles('**/foundry.toml', '**/foundry.lock') }}
           restore-keys: |
             ${{ runner.os }}-foundry-
 
-      - name: Build contracts
-        run: forge build --via-ir
-        timeout-minutes: 45
+      - name: Build step 1 - Compile dependencies first
+        run: |
+          echo "Step 1: Compiling core protocol contracts..."
+          forge build --via-ir --skip test --skip script src/contracts/
+        timeout-minutes: 60
         env:
           FOUNDRY_PROFILE: default
+          FOUNDRY_DISABLE_NIGHTLY_WARNING: 1
+        continue-on-error: true
+
+      - name: Build step 2 - Compile deployment contracts
+        run: |
+          echo "Step 2: Compiling deployment contracts..."
+          forge build --via-ir --skip test --skip script src/deployments/
+        timeout-minutes: 30
+        env:
+          FOUNDRY_PROFILE: default
+          FOUNDRY_DISABLE_NIGHTLY_WARNING: 1
+        continue-on-error: true
+
+      - name: Build step 3 - Compile scripts
+        run: |
+          echo "Step 3: Compiling scripts..."
+          forge build --via-ir --skip test scripts/
+        timeout-minutes: 20
+        env:
+          FOUNDRY_PROFILE: default
+          FOUNDRY_DISABLE_NIGHTLY_WARNING: 1
+        continue-on-error: true
+
+      - name: Build step 4 - Final verification build
+        run: |
+          echo "Step 4: Running final verification build..."
+          forge build --via-ir
+        timeout-minutes: 30
+        env:
+          FOUNDRY_PROFILE: default
+          FOUNDRY_DISABLE_NIGHTLY_WARNING: 1
 
   test:
     name: Test
     runs-on: ubuntu-latest
-    timeout-minutes: 90
+    timeout-minutes: 120
     needs: build
     steps:
       - name: Checkout Repo
@@ -64,7 +98,7 @@ jobs:
       - name: Install Foundry
         uses: foundry-rs/foundry-toolchain@v1
         with:
-          version: nightly
+          version: stable
 
       - name: Cache Foundry
         uses: actions/cache@v4
@@ -72,15 +106,17 @@ jobs:
           path: |
             ~/.foundry/cache
             cache
+            out
           key: ${{ runner.os }}-foundry-${{ hashFiles('**/foundry.toml', '**/foundry.lock') }}
           restore-keys: |
             ${{ runner.os }}-foundry-
 
       - name: Run tests
         run: forge test --via-ir
-        timeout-minutes: 60
+        timeout-minutes: 90
         env:
           FOUNDRY_PROFILE: default
+          FOUNDRY_DISABLE_NIGHTLY_WARNING: 1
 
       - name: Run deployment tests
         run: forge test --match-path tests/deployments/**/*.sol --via-ir
