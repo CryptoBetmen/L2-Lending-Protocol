@@ -21,8 +21,7 @@ jobs:
     uses: bgd-labs/github-workflows/.github/workflows/foundry-lint-prettier.yml@main
   build:
     name: Build
-
-    runs-on: ubuntu-latest-4-cores
+    runs-on: ubuntu-latest
     timeout-minutes: 120
     steps:
       - name: Checkout Repo
@@ -85,10 +84,7 @@ jobs:
 
   test:
     name: Test
-    # For larger runners: use 'ubuntu-latest-4-cores' or your self-hosted runner label
-    # For standard: use 'ubuntu-latest' (2 cores, 7 GB RAM)
-    # To use larger runner, replace 'ubuntu-latest' with your runner label below
-    runs-on: ubuntu-latest-4-cores
+    runs-on: ubuntu-latest
     timeout-minutes: 120
     needs: build
     steps:
