@@ -43,6 +43,12 @@ contract ArbitrumSepoliaDeploymentTest is Test, DeployUtils, K613ArbitrumMarketI
     emergencyAdmin = makeAddr('emergencyAdmin');
     riskAdmin = makeAddr('riskAdmin');
 
+    // Etch the create2 factory for local testing
+    vm.etch(
+      0x914d7Fec6aaC8cd542e72Bca78B30650d45643d7,
+      hex'7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe03601600081602082378035828234f58015156039578182fd5b8082525050506014600cf3'
+    );
+
     // Deploy mock tokens
     weth = new WETH9();
     usdc = new TestnetERC20('USD Coin', 'USDC', 6, deployer);
@@ -213,8 +219,9 @@ contract ArbitrumSepoliaDeploymentTest is Test, DeployUtils, K613ArbitrumMarketI
 
     // Validate Oracle
     IAaveOracle oracle = IAaveOracle(marketReport.aaveOracle);
-    address baseCurrency = oracle.BASE_CURRENCY();
-    assertNotEq(baseCurrency, address(0), 'Base currency is zero');
+    // BASE_CURRENCY = address(0) means USD, which is valid
+    uint256 baseCurrencyUnit = oracle.BASE_CURRENCY_UNIT();
+    assertGt(baseCurrencyUnit, 0, 'Base currency unit not set');
 
     console.log('Deployment validation successful!');
   }
@@ -291,8 +298,9 @@ contract ArbitrumSepoliaDeploymentTest is Test, DeployUtils, K613ArbitrumMarketI
 
     // Step 3: Verify Oracle
     IAaveOracle oracle = IAaveOracle(marketReport.aaveOracle);
-    address baseCurrency = oracle.BASE_CURRENCY();
-    assertNotEq(baseCurrency, address(0), 'Oracle not configured');
+    // BASE_CURRENCY = address(0) means USD, which is valid
+    uint256 baseCurrencyUnit = oracle.BASE_CURRENCY_UNIT();
+    assertGt(baseCurrencyUnit, 0, 'Oracle base currency unit not set');
 
     // Step 4: Verify ACL
     ACLManager aclManager = ACLManager(marketReport.aclManager);
