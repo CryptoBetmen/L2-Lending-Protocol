@@ -75,7 +75,7 @@ jobs:
   test:
     name: Test
     runs-on: ubuntu-latest
-    timeout-minutes: 180
+    timeout-minutes: 240
     needs: build
     steps:
       - name: Checkout Repo
@@ -135,11 +135,47 @@ jobs:
           FOUNDRY_PROFILE: default
           FOUNDRY_DISABLE_NIGHTLY_WARNING: 1
 
-      - name: Test step 5 - Other tests (rewards, misc, etc)
+      - name: Test step 5 - Rewards tests
         run: |
-          echo "Step 5: Running other tests..."
-          forge test --via-ir --skip tests/deployments/ --skip tests/protocol/
-        timeout-minutes: 30
+          echo "Step 5: Running rewards tests..."
+          forge test tests/rewards/ --via-ir
+        timeout-minutes: 20
+        env:
+          FOUNDRY_PROFILE: default
+          FOUNDRY_DISABLE_NIGHTLY_WARNING: 1
+
+      - name: Test step 6 - Misc tests
+        run: |
+          echo "Step 6: Running misc tests..."
+          forge test tests/misc/ --via-ir
+        timeout-minutes: 20
+        env:
+          FOUNDRY_PROFILE: default
+          FOUNDRY_DISABLE_NIGHTLY_WARNING: 1
+
+      - name: Test step 7 - Extensions tests
+        run: |
+          echo "Step 7: Running extensions tests..."
+          forge test tests/extensions/ --via-ir
+        timeout-minutes: 20
+        env:
+          FOUNDRY_PROFILE: default
+          FOUNDRY_DISABLE_NIGHTLY_WARNING: 1
+
+      - name: Test step 8 - Treasury tests
+        run: |
+          echo "Step 8: Running treasury tests..."
+          forge test tests/treasury/ --via-ir
+        timeout-minutes: 15
+        env:
+          FOUNDRY_PROFILE: default
+          FOUNDRY_DISABLE_NIGHTLY_WARNING: 1
+
+      - name: Test step 9 - Remaining tests
+        run: |
+          echo "Step 9: Running remaining tests..."
+          forge test --via-ir --skip tests/deployments/ --skip tests/protocol/ --skip tests/rewards/ --skip tests/misc/ --skip tests/extensions/ --skip tests/treasury/
+        timeout-minutes: 20
         env:
           FOUNDRY_PROFILE: default
           FOUNDRY_DISABLE_NIGHTLY_WARNING: 1
